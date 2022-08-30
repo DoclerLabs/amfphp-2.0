@@ -12,6 +12,9 @@
 /**
  *  includes
  *  */
+
+use PHPUnit\Framework\TestCase;
+
 require_once dirname(__FILE__) . '/../../../../Amfphp/ClassLoader.php';
 require_once dirname(__FILE__) . '/../../../TestData/AmfTestData.php';
 require_once dirname(__FILE__) . '/../../../../Amfphp/ClassLoader.php';
@@ -22,7 +25,7 @@ require_once dirname(__FILE__) . '/../../../TestData/TestServicesConfig.php';
  * @package Tests_Amfphp_Core_Common
  * @author Ariel Sommeria-klein
  */
-class Amfphp_Core_Common_ServiceRouterTest extends PHPUnit_Framework_TestCase {
+class Amfphp_Core_Common_ServiceRouterTest extends TestCase {
 
     /**
      * object
@@ -34,7 +37,7 @@ class Amfphp_Core_Common_ServiceRouterTest extends PHPUnit_Framework_TestCase {
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp() {
+    protected function setUp(): void {
         $testServiceConfig = new TestServicesConfig();
         $this->object = new Amfphp_Core_Common_ServiceRouter($testServiceConfig->serviceFolders, $testServiceConfig->serviceNames2ClassFindInfo);
     }
@@ -74,26 +77,26 @@ class Amfphp_Core_Common_ServiceRouterTest extends PHPUnit_Framework_TestCase {
 
     /**
      * test no service exception
-     * @expectedException Amfphp_Core_Exception
      */
     public function testNoServiceException() {
+        $this->expectException(Amfphp_Core_Exception::class);
         $ret = $this->object->executeServiceCall('NoService', 'noFunction', array());
     }
 
     /**
      * test no function exception
-     * @expectedException Amfphp_Core_Exception
      */
     public function testNoFunctionException() {
+        $this->expectException(Amfphp_Core_Exception::class);
         $ret = $this->object->executeServiceCall('DummyService', 'noFunction', array());
         $this->assertEquals($ret, null);
     }
 
     /**
      * test reserved method exception
-     * @expectedException Amfphp_Core_Exception
      */
     public function testReservedMethodException() {
+        $this->expectException(Amfphp_Core_Exception::class);
         $ret = $this->object->executeServiceCall('DummyService', '_reserved', array());
     }
 

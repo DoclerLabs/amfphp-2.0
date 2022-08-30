@@ -75,10 +75,10 @@ class AmfphpFlexMessaging {
 
     /**
      * filter amf request message handler
-     * @param Object $handler null at call. If the plugin takes over the handling of the request message,
+     * @param Object|null $handler null at call. If the plugin takes over the handling of the request message,
      * it must set this to a proper handler for the message, probably itself.
      * @param Amfphp_Core_Amf_Message $requestMessage the request message
-     * @return array
+     * @return self|void
      */
     public function filterAmfRequestMessageHandler($handler, Amfphp_Core_Amf_Message $requestMessage) {
         if ($requestMessage->targetUri == 'null') {
@@ -94,7 +94,7 @@ class AmfphpFlexMessaging {
      * filter amf exception handler
      * @param Object $handler null at call. If the plugin takes over the handling of the request message,
      * it must set this to a proper handler for the message, probably itself.
-     * @return array
+     * @return self|void
      */
     public function filterAmfExceptionHandler($handler) {
         if ($this->clientUsesFlexMessaging) {

@@ -12,6 +12,9 @@
 /**
 *  includes
 *  */
+
+use PHPUnit\Framework\TestCase;
+
 require_once dirname(__FILE__) . '/../../../../Amfphp/Plugins/AmfphpErrorHandler/AmfphpErrorHandler.php';
 require_once dirname(__FILE__) . '/../../../../Amfphp/ClassLoader.php';
 
@@ -20,7 +23,7 @@ require_once dirname(__FILE__) . '/../../../../Amfphp/ClassLoader.php';
  * @package Tests_Amfphp_Plugins_ErrorHandler
  * @author Ariel Sommeria-klein
  */
-class AmfphpErrorHandlerTest extends PHPUnit_Framework_TestCase {
+class AmfphpErrorHandlerTest extends TestCase {
 
     /**
      * object
@@ -33,13 +36,13 @@ class AmfphpErrorHandlerTest extends PHPUnit_Framework_TestCase {
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp() {
+    protected function setUp(): void {
         error_reporting(E_ALL ^ E_USER_NOTICE );
         $this->object = new AmfphpErrorHandler();
         
     }
     
-    protected function tearDown(){
+    protected function tearDown(): void {
         error_reporting(E_ALL);
         
     }
@@ -47,9 +50,9 @@ class AmfphpErrorHandlerTest extends PHPUnit_Framework_TestCase {
 
     /**
      * test trigger error with error level => should throw exception
-     * @expectedException Amfphp_Core_Exception
      * */
     public function testThrows(){
+        $this->expectException(Amfphp_Core_Exception::class);
         trigger_error("oops", E_USER_ERROR);
     }
 

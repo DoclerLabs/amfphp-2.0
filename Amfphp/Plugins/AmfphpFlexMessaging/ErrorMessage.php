@@ -50,7 +50,7 @@ class AmfphpFlexMessaging_ErrorMessage {
 
     /**
      * constructor
-     * @param type $correlationId
+     * @param string $correlationId
      */
     public function __construct($correlationId) {
         $explicitTypeField = Amfphp_Core_Amf_Constants::FIELD_EXPLICIT_TYPE;

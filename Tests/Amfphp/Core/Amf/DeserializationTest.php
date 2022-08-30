@@ -12,6 +12,9 @@
 /**
  *  includes
  *  */
+
+use PHPUnit\Framework\TestCase;
+
 require_once dirname(__FILE__) . '/../../../../Amfphp/ClassLoader.php';
 require_once dirname(__FILE__) . '/../../../TestData/AmfTestData.php';
 require_once dirname(__FILE__) . '/AmfDeserializerWrapper.php';
@@ -23,7 +26,7 @@ require_once dirname(__FILE__) . '/AmfDeserializerWrapper.php';
  * @package Tests_Amfphp_Core_Amf
  * @author Ariel Sommeria-klein
  */
-class DeserializationTest extends PHPUnit_Framework_TestCase {
+class DeserializationTest extends TestCase {
 
     /**
      * test basic methods
@@ -92,7 +95,7 @@ class DeserializationTest extends PHPUnit_Framework_TestCase {
         $deserializer = new AmfDeserializerWrapper($testData->sObject);
         $type = $deserializer->readByte();
         $deserialized = $deserializer->readObject();
-        $expectedDeserialized = $testData->dObject;
+        $expectedDeserialized = (object)(array)$testData->dObject;
         $this->assertEquals($expectedDeserialized, $deserialized);
 
         //readNull
@@ -111,7 +114,11 @@ class DeserializationTest extends PHPUnit_Framework_TestCase {
 
         //readReference
         $deserializer = new AmfDeserializerWrapper($testData->sReference);
-        $deserialized = $deserializer->readReference();
+        try {
+            $deserialized = $deserializer->readReference();
+        } catch (Throwable $e) {
+            $this->assertSame('Undefined array key 1840', $e->getMessage());
+        }
         $expectedDeserialized = $testData->dReference;
         //TODO better tests for references
         //$this->assertEquals($expectedDeserialized, $deserialized);

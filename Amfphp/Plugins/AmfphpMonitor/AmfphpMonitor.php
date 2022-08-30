@@ -191,7 +191,7 @@ class AmfphpMonitor {
 
     /**
      * logs the time for start of serialization
-     * @param packet $deserializedResponse
+     * @param string $deserializedResponse
      */
     public function filterDeserializedResponse($deserializedResponse) {
         self::addTime('Service Call');
@@ -206,7 +206,7 @@ class AmfphpMonitor {
      * @param mixed $rawData
      */
     public function filterSerializedResponse($rawData) {
-        if(substr($this->uri, 0, 6) == 'Amfphp'){
+        if(substr((string)$this->uri, 0, 6) == 'Amfphp'){
             return;
         }
         

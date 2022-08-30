@@ -176,7 +176,7 @@ class AmfTestData {
 
     /**
      * reference
-     * @var stdClass
+     * @var int
      */
     public $dReference;
 
@@ -352,13 +352,13 @@ class AmfTestData {
 
     /**
      * test service request packet
-     * @var Amfphp_Core_Amf_Packet
+     * @var String
      */
     public $testServiceRequestPacket;
 
     /**
      * test service request packet
-     * @var Amfphp_Core_Amf_Packet
+     * @var String
      */
     public $testServiceResponsePacket;
 
@@ -504,7 +504,12 @@ class AmfTestData {
      * 
      */
     public function buildObject() {
-        $this->dObject = new stdClass();
+        $this->dObject = new class implements Countable {
+            public function count(): int
+            {
+                return 1;
+            }
+        };
         $this->dObject->firstKey = 'firstValue';
         $this->dObject->secondKey = 'secondValue';
         //type : 3

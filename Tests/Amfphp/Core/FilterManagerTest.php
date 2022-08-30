@@ -12,6 +12,9 @@
 /**
  *  includes
  *  */
+
+use PHPUnit\Framework\TestCase;
+
 require_once dirname(__FILE__) . '/../../../Amfphp/ClassLoader.php';
 
 /**
@@ -19,7 +22,7 @@ require_once dirname(__FILE__) . '/../../../Amfphp/ClassLoader.php';
  * @package Tests_Amfphp_Core
  * @author Ariel Sommeria-klein
  */
-class Amfphp_Core_FilterManagerTest extends PHPUnit_Framework_TestCase {
+class Amfphp_Core_FilterManagerTest extends TestCase {
 
     /**
      * test filter

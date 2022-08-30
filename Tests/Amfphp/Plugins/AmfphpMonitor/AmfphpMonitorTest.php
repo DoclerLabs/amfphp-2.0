@@ -12,6 +12,9 @@
 /**
 *  includes
 *  */
+
+use PHPUnit\Framework\TestCase;
+
 require_once dirname(__FILE__) . '/../../../../Amfphp/Plugins/AmfphpMonitor/AmfphpMonitor.php';
 require_once dirname(__FILE__) . '/../../../../Amfphp/ClassLoader.php';
 
@@ -20,11 +23,11 @@ require_once dirname(__FILE__) . '/../../../../Amfphp/ClassLoader.php';
  * @package Tests_Amfphp_Plugins_Monitor
  * @author Ariel Sommeria-klein
  */
-class AmfphpMonitorTest extends PHPUnit_Framework_TestCase {
+class AmfphpMonitorTest extends TestCase {
 
     /**
      * object
-     * @var Monitor
+     * @var AmfphpMonitor
      */
     protected $object;
     
@@ -33,7 +36,7 @@ class AmfphpMonitorTest extends PHPUnit_Framework_TestCase {
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp() {
+    protected function setUp(): void {
         $this->logPath = dirname(__FILE__). '/testlog.txt.php';
         $pluginConfig['maxLogFileSize'] = 20;
         $pluginConfig['logPath'] = $this->logPath;
@@ -46,7 +49,7 @@ class AmfphpMonitorTest extends PHPUnit_Framework_TestCase {
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown() {
+    protected function tearDown(): void {
        file_put_contents($this->logPath, "<?php exit();?>");
     }
     /**
@@ -66,7 +69,7 @@ class AmfphpMonitorTest extends PHPUnit_Framework_TestCase {
     public function testNoPermission(){
         $pluginConfig['logPath'] = $this->logPath. 'bla';
         $this->object = new AmfphpMonitor($pluginConfig);
-        
+        $this->addToAssertionCount(1);
     }
     
     /**

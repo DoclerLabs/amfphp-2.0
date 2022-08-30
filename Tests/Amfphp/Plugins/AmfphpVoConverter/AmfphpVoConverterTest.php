@@ -12,6 +12,9 @@
 /**
 *  includes
 *  */
+
+use PHPUnit\Framework\TestCase;
+
 require_once dirname(__FILE__) . '/../../../../Amfphp/Plugins/AmfphpVoConverter/AmfphpVoConverter.php';
 require_once dirname(__FILE__) . '/../../../../Amfphp/ClassLoader.php';
 require_once dirname(__FILE__) . '/../../../TestData/Vo/TestVo1.php';
@@ -22,11 +25,11 @@ require_once dirname(__FILE__) . '/../../../TestData/Vo/TestVo2.php';
  * @package Tests_Amfphp_Plugins_VoConverter
  * @author Ariel Sommeria-klein
  */
-class AmfphpVoConverterTest extends PHPUnit_Framework_TestCase {
+class AmfphpVoConverterTest extends TestCase {
 
     /**
      * object
-     * @var VoConverter
+     * @var AmfphpVoConverter
      */
     protected $object;
 
@@ -34,7 +37,7 @@ class AmfphpVoConverterTest extends PHPUnit_Framework_TestCase {
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp() {
+    protected function setUp(): void {
         $voFolders = array(dirname(__FILE__) . '/../../../TestData/Vo/');
         //add namespace test vo folder
         $voFolders[] = array(dirname(__FILE__). '/../../../TestData/NamespaceVos/', 'NVo');
@@ -47,7 +50,7 @@ class AmfphpVoConverterTest extends PHPUnit_Framework_TestCase {
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown() {
+    protected function tearDown(): void {
 
     }
     /**
@@ -121,9 +124,9 @@ class AmfphpVoConverterTest extends PHPUnit_Framework_TestCase {
     }
     /**
      * test enforce conversion
-     * @expectedException Amfphp_Core_Exception
      */
     public function testEnforceConversion(){
+        $this->expectException(Amfphp_Core_Exception::class);
         $this->object->enforceConversion = true;
         $explicitTypeField = Amfphp_Core_Amf_Constants::FIELD_EXPLICIT_TYPE;
         $testObj1 = new stdClass();
@@ -132,8 +135,7 @@ class AmfphpVoConverterTest extends PHPUnit_Framework_TestCase {
         $testMessage = new Amfphp_Core_Amf_Message(null, null, array($testObj1));
         $testPacket = new Amfphp_Core_Amf_Packet();
         $testPacket->messages[] = $testMessage;
-        $ret = $this->object->filterDeserializedRequest($testPacket);
-
+        $this->object->filterDeserializedRequest($testPacket);
     }
 
     /**

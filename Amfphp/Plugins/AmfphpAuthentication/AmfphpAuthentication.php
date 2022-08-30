@@ -87,9 +87,9 @@ class AmfphpAuthentication {
 
     /**
      * filter amf request header handler
-     * @param Object $handler
+     * @param Object|null $handler
      * @param Amfphp_Core_Amf_Header $header the request header
-     * @return AmfphpAuthentication 
+     * @return self|void
      */
     public function filterAmfRequestHeaderHandler($handler, Amfphp_Core_Amf_Header $header) {
         if ($header->name == Amfphp_Core_Amf_Constants::CREDENTIALS_HEADER_NAME) {
@@ -105,7 +105,7 @@ class AmfphpAuthentication {
      * @param <Object> $serviceObject
      * @param <String> $serviceName
      * @param <String> $methodName
-     * @return <array>
+     * @return void
      */
     public function filterServiceObject($serviceObject, $serviceName, $methodName) {
         if (!method_exists($serviceObject, self::METHOD_GET_METHOD_ROLES)) {

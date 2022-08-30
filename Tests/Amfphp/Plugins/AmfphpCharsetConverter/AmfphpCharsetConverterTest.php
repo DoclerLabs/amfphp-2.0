@@ -12,6 +12,9 @@
 /**
 *  includes
 *  */
+
+use PHPUnit\Framework\TestCase;
+
 require_once dirname(__FILE__) . '/../../../../Amfphp/Plugins/AmfphpCharsetConverter/AmfphpCharsetConverter.php';
 require_once dirname(__FILE__) . '/../../../../Amfphp/ClassLoader.php';
 
@@ -21,11 +24,11 @@ require_once dirname(__FILE__) . '/../../../../Amfphp/ClassLoader.php';
  * @author Ariel Sommeria-klein
  *
  */
-class AmfphpCharsetConverterTest extends PHPUnit_Framework_TestCase {
+class AmfphpCharsetConverterTest extends TestCase {
 
     /**
      * object
-     * @var CharsetConverter
+     * @var AmfphpCharsetConverter
      */
     protected $object;
     
@@ -45,8 +48,8 @@ class AmfphpCharsetConverterTest extends PHPUnit_Framework_TestCase {
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp() {
-        $pluginConfig = array('clientCharset' => 'UTF-8', 'phpCharset' => 'ISO-8859-1', 'method' =>AmfphpCharsetConverter::METHOD_ICONV);
+    protected function setUp(): void {
+        $pluginConfig = array('clientCharset' => 'UTF-8', 'phpCharset' => 'ISO-8859-1', 'method' => AmfphpCharsetConverter::METHOD_ICONV);
         $this->object = new AmfphpCharsetConverter($pluginConfig);
         $this->textInClientCharset = 'éèê'; //utf-8
         $this->textInPhpCharset = iconv('UTF-8', 'ISO-8859-1', $this->textInClientCharset);
@@ -57,7 +60,7 @@ class AmfphpCharsetConverterTest extends PHPUnit_Framework_TestCase {
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown() {
+    protected function tearDown(): void {
 
     }
     

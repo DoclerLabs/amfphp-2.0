@@ -12,6 +12,9 @@
 /**
 *  includes
 *  */
+
+use PHPUnit\Framework\TestCase;
+
 require_once dirname(__FILE__) . '/../../../../Amfphp/Plugins/AmfphpLogger/AmfphpLogger.php';
 require_once dirname(__FILE__) . '/../../../../Amfphp/ClassLoader.php';
 
@@ -20,7 +23,7 @@ require_once dirname(__FILE__) . '/../../../../Amfphp/ClassLoader.php';
  * @package Tests_Amfphp_Plugins_Logger
  * @author Ariel Sommeria-klein
  */
-class AmfphpLoggerTest extends PHPUnit_Framework_TestCase {
+class AmfphpLoggerTest extends TestCase {
 
     /**
      * test simple

@@ -78,7 +78,7 @@ class Amfphp_Core_Amf_Deserializer implements Amfphp_Core_Common_IDeserializer {
      *  objects stored for tracking references(amf0)
      * @var array
      */
-    protected $amf0storedObjects;
+    protected $amf0storedObjects = [];
 
     /**
      * converts VOs directly if set, rather than instanciating anonymous classes that are converted later
@@ -216,7 +216,6 @@ class Amfphp_Core_Amf_Deserializer implements Amfphp_Core_Common_IDeserializer {
             //amf3 is now most common, so start with that
             case 0x11: //Amf3-specific
                 return $this->readAmf3Data();
-                break;
             case 0: // number
                 return $this->readDouble();
             case 1: // boolean
@@ -251,10 +250,7 @@ class Amfphp_Core_Amf_Deserializer implements Amfphp_Core_Common_IDeserializer {
                 return $this->readCustomClass();
             default: // unknown case
                 throw new Amfphp_Core_Exception("Found unhandled type with code: $type");
-                exit();
-                break;
         }
-        return $data;
     }
 
     /**
@@ -391,8 +387,8 @@ class Amfphp_Core_Amf_Deserializer implements Amfphp_Core_Common_IDeserializer {
     /**
      * tries to use the type to get a typed object. If not possible, return a stdClass, 
      * with the explicit type marker set if the type was not just an empty string
-     * @param type $typeIdentifier
-     * @return stdClass or typed object 
+     * @param string $typeIdentifier
+     * @return object
      */
     protected function resolveType($typeIdentifier) {
         if ($typeIdentifier != '') {
@@ -482,7 +478,7 @@ class Amfphp_Core_Amf_Deserializer implements Amfphp_Core_Common_IDeserializer {
      * which gives seven bits of value per serialized byte by using the high-order bit
      * of each byte as a continuation flag.
      *
-     * @return read integer value
+     * @return int read integer value
      */
     protected function readAmf3Int() {
         $int = $this->readByte();
@@ -528,7 +524,6 @@ class Amfphp_Core_Amf_Deserializer implements Amfphp_Core_Common_IDeserializer {
             $firstInt = $firstInt >> 1;
             if ($firstInt >= count($this->storedObjects)) {
                 throw new Amfphp_Core_Exception('Undefined date reference: ' . $firstInt);
-                return false;
             }
             return $this->storedObjects[$firstInt];
         }
@@ -553,7 +548,6 @@ class Amfphp_Core_Amf_Deserializer implements Amfphp_Core_Common_IDeserializer {
             $strref = $strref >> 1;
             if ($strref >= count($this->storedStrings)) {
                 throw new Amfphp_Core_Exception('Undefined string reference: ' . $strref, E_USER_ERROR);
-                return false;
             }
             return $this->storedStrings[$strref];
         } else {
@@ -586,7 +580,7 @@ class Amfphp_Core_Amf_Deserializer implements Amfphp_Core_Common_IDeserializer {
 
     /**
      * read amf 3 xml doc
-     * @return Amfphp_Core_Amf_Types_Xml
+     * @return Amfphp_Core_Amf_Types_XmlDocument
      */
     protected function readAmf3XmlDocument() {
         $handle = $this->readAmf3Int();
@@ -737,7 +731,7 @@ class Amfphp_Core_Amf_Deserializer implements Amfphp_Core_Common_IDeserializer {
 
     /**
      * read some data and move pointer
-     * @param type $len
+     * @param int $len
      * @return mixed
      */
     protected function readBuffer($len) {
@@ -818,7 +812,7 @@ class Amfphp_Core_Amf_Deserializer implements Amfphp_Core_Common_IDeserializer {
      * @param   integer You can specify 4 for integers or 8 for double precision floating point.
      * @param   string  'ival' for signed integers, 'Ival' for unsigned integers, and "dval" for double precision floating point
      * 
-     * @return <type>
+     * @return mixed
      */
     protected function readAmf3VectorValue($length, $format) {
         $bytes = $this->readBuffer($length);

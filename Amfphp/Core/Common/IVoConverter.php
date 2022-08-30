@@ -16,16 +16,16 @@
 interface Amfphp_Core_Common_IVoConverter {
     
     /**
-     * creates and returns an instance of of $voName.
+     * creates and returns an instance of $voName.
      * 
-     * @param type $voName
-     * @return typed object or null
+     * @param string $voName
+     * @return object|null
      */
     public function getNewVoInstance($voName);
 
     
     /**
-     * sets the the explicit type marker on the object. 
+     * sets the explicit type marker on the object.
      *
      * 
      * @param mixed $obj

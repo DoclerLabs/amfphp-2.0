@@ -28,25 +28,12 @@ class TestServicesConfig extends Amfphp_Core_Config {
         $this->serviceFolders[] = dirname(__FILE__) . '/../../Examples/Php/ExampleServices/';
         $testServicePath = dirname(__FILE__) . '/TestService.php';
         $classFindInfo = new Amfphp_Core_Common_ClassFindInfo($testServicePath, 'TestService');
-	$this->serviceNames2ClassFindInfo = array('TestService' => $classFindInfo);
+        $this->serviceNames2ClassFindInfo = array('TestService' => $classFindInfo);
         
         $voFolders = array(AMFPHP_ROOTPATH . 'Services/Vo/', dirname(__FILE__). '/../../Examples/Php/Vo/');
         $voFolders[] = array(dirname(__FILE__). '/NamespaceVos/', 'NVo');
         
         $this->pluginsConfig['AmfphpVoConverter']['voFolders'] = $voFolders;
-        //$this->pluginsConfig['AmfphpVoConverter']['enforceConversion'] = true;
-        
-        //My tests, shouldn't be in release code!!
-        switch(php_uname('s')){
-            case 'Darwin':
-                $this->pluginsFolders[] = '/Users/ariel/Documents/workspaces/baguetteamf/BaguetteAMF/amfphp_plugin/';
-                break;
-            case 'Linux':
-                $this->pluginsFolders[] = '/var/www/baguetteamf/BaguetteAMF/amfphp_plugin/';
-                break;
-            
-        }
-        //$this->serviceFolders [] = '/Users/arielsommeria-klein/Documents/workspaces/baguetteamf/test/Services/';
     }
 
 }

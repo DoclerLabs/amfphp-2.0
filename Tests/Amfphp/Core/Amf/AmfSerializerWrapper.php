@@ -138,7 +138,7 @@ class AmfSerializerWrapper extends Amfphp_Core_Amf_Serializer {
 
     /**
      * write array or object
-     * @param array $d
+     * @param array|object $d
      */
     public function writeArrayOrObject($d) {
         parent::writeArrayOrObject($d);
@@ -154,7 +154,7 @@ class AmfSerializerWrapper extends Amfphp_Core_Amf_Serializer {
 
     /**
      * write typed object
-     * @param stdClass $d
+     * @param object $d
      */
     public function writeTypedObject($d) {
         parent::writeTypedObject($d);
